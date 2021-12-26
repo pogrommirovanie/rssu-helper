@@ -1,0 +1,46 @@
+.extension-badge-container {
+    cursor: pointer;
+
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    left: -5px;
+    bottom: 60px;
+    max-height: 32px;
+
+    border-radius: 16px;
+    background-color: #0c365c;
+    z-index: 2147483647;
+
+    .extension-badge-icon {
+        position: relative;
+        display: inline-block;
+
+        width: 32px;
+        height: 32px;
+        margin-bottom: 1px;
+        margin-top: -$margin-bottom;
+
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0iI0ZGRkZGRiIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggY2xhc3M9Imhlcm9pY29uLXVpIiBkPSJNMTcgMjJhMiAyIDAgMCAxLTItMnYtMWExIDEgMCAwIDAtMS0xIDEgMSAwIDAgMC0xIDF2MWEyIDIgMCAwIDEtMiAySDhhMiAyIDAgMCAxLTItMnYtM0g1YTMgMyAwIDEgMSAwLTZoMVY4YzAtMS4xMS45LTIgMi0yaDNWNWEzIDMgMCAxIDEgNiAwdjFoM2EyIDIgMCAwIDEgMiAydjNhMiAyIDAgMCAxLTIgMmgtMWExIDEgMCAwIDAtMSAxIDEgMSAwIDAgMCAxIDFoMWEyIDIgMCAwIDEgMiAydjNhMiAyIDAgMCAxLTIgMmgtM3ptMy0ydi0zaC0xYTMgMyAwIDEgMSAwLTZoMVY4aC0zYTIgMiAwIDAgMS0yLTJWNWExIDEgMCAwIDAtMS0xIDEgMSAwIDAgMC0xIDF2MWEyIDIgMCAwIDEtMiAySDh2M2EyIDIgMCAwIDEtMiAySDVhMSAxIDAgMCAwLTEgMSAxIDEgMCAwIDAgMSAxaDFhMiAyIDAgMCAxIDIgMnYzaDN2LTFhMyAzIDAgMSAxIDYgMHYxaDN6Ii8+PC9zdmc+');
+    }
+    .extension-badge-version {
+        display: none;
+        padding: 3px;
+        margin-right: 8px;
+
+        color: white;
+        font-size: larger;
+        font-weight: bold;
+    }
+
+    &:hover {
+        .extension-badge-version {
+            display: block;
+        }
+    }
+}

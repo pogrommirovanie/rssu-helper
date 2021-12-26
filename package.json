@@ -1,0 +1,31 @@
+{
+    "displayName": "RSSU Helper",
+    "version": "0.1.0",
+    "description": "RSSU Helper - расширение, дополняющее функционал СДО РГСУ",
+    "updateURL": "https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js",
+    "compilerOptions": {
+        "esModuleInterop": true
+    },
+    "dependencies": {},
+    "scripts": {
+        "build": "webpack --config webpack.config.js",
+        "build-watch": "webpack --watch --config webpack.config.js & npx http-server -p 44000 -c-1 dist/"
+    },
+    "devDependencies": {
+        "@types/node": "^16.10.3",
+        "@typescript-eslint/eslint-plugin": "^5.0.0",
+        "@typescript-eslint/parser": "^5.0.0",
+        "eslint": "^8.0.1",
+        "eslint-config-prettier": "^8.3.0",
+        "http-server": "^13.0.2",
+        "prettier": "2.4.1",
+        "less": "^4.1.2",
+        "less-loader": "^7.3.0",
+        "css-loader": "^5.2.7",
+        "style-loader": "^2.0.0",
+        "typescript": "^4.4.4",
+        "ts-loader": "^8.3.0",
+        "webpack": "^4.46.0",
+        "webpack-cli": "^4.9.0"
+    }
+}
