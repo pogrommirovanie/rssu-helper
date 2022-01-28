@@ -1,4 +1,4 @@
-// TODO: [LOW PRIOR] Add/find attribute & tagName types
+// TODO: [LOW PRIOR] Add/find attribute & tagName types, recreate actual jquery method signature (https://stackoverflow.com/a/4158203), can also add event listeners
 // jquery-style element creation.
 // taken from https://stackoverflow.com/a/23899918 & adapted for typescript
 export function createElementWithAttr<T extends HTMLElement>(

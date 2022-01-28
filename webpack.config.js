@@ -33,16 +33,17 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader']
+                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
             },
             {
                 test: /\.less$/i,
-                loader: ['style-loader', 'css-loader', 'less-loader']
+                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'less-loader' }]
             }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        modules: [path.resolve('./'), path.resolve('node_modules')]
     },
     output: {
         filename: 'rssu-helper.user.js',

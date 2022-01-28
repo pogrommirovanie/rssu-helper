@@ -1,10 +1,12 @@
 {
-    "include": ["**/*.ts"],
     "compilerOptions": {
-        // TODO: Make typescript @/* paths work (throws error when running npm build)
-        // "baseUrl": ".",
+        // TODO: Make typescript @/* paths work (throws error when running npm build for most .ts files)
+        //  Webpack seems to treat the @s/* as ../../ in all cases, i.e. in parsedSubjectEl.ts: import ../../../util/misc can be changed to @s/../util/misc
+        //  ?if nothing helps - try to replace tsconfig, eslintrc.json, webpack.config.js & others
+        "baseUrl": ".",
+        // "moduleResolution": "Node",
         // "paths": {
-        //     "@/*": ["./src/*"]
+        //     "@s/*": ["./src/*"]
         // },
 
         /* Language and Environment */
@@ -12,11 +14,13 @@
         "module": "commonjs" /* Specify what module code is generated. */,
         "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
         "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+        "sourceMap": true,
 
         /* Type Checking */
         "strict": true /* Enable all strict type-checking options. */,
         "outDir": "./dist/",
         "allowJs": true,
         "lib": ["es2015", "dom"]
-    }
+    },
+    "include": ["./src/**/*", "./typings/*.d.ts"]
 }

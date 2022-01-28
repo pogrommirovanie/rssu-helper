@@ -1,0 +1,48 @@
+import { RunScriptURLRegexCondition } from 'src/classes/pageScript/runScriptConditions'
+import { PageScriptsManager } from 'src/classes/pageScript/pageScriptsManager'
+import insertSubjectMinimizeButton from './scripts/insertMinSubjectBtn/insertMinimizeSubjectBtns'
+import InsertSubjectNoteElsScript from './scripts/insertNoteEls/insertNoteEls'
+import InsertAdditionalLinks from './scripts/insertAdditionalLinks'
+import { ParsedSubjectEl } from './parsers/parsedSubjectEl'
+import SubjectListStore from './store'
+
+export class SubjectListPageData {
+    subjects: ParsedSubjectEl[]
+    constructor() {
+        this.subjects = Array.from(document.querySelectorAll('div.lesson')).map((el) => new ParsedSubjectEl(el as HTMLElement))
+    }
+}
+export default class SubjectListPageManager extends PageScriptsManager<SubjectListStore> {
+    pageScripts = {
+        insertAdditionalLinks: new InsertAdditionalLinks(),
+        insertSubjectNoteEls: new InsertSubjectNoteElsScript(),
+        insertMinimizeSubjectBtn: new insertSubjectMinimizeButton()
+    }
+    constructor() {
+        super(SubjectListStore.getInstance(), [new RunScriptURLRegexCondition(/\/subject\/list\/list\/list-switcher\/current|\/subject\/list/g)])
+    }
+    onPageLoad(ev: Event): void {
+        const pageData = new SubjectListPageData()
+        this.runPageScripts(pageData)
+    }
+    onPageFocus(ev: FocusEvent): void {
+        const pageData = new SubjectListPageData()
+        this.updatePageScripts(pageData)
+    }
+}
+
+//TODO: Improve link/menu for extension updates & news
+//TODO: Reorder subjects w/ drag & drop/arrows/priority numbers
+//TODO: ?rework/opt. fetch notifications
+//TODO: ?fetch total news count & last update. Optionally add links to individual news pages (or display 'no news')
+//TODO: ?Change title for every tab (remove Virtual Educational Environment)
+//TODO: Option menu for disabling userway (acessibility widget)
+//TODO: Foldable notes for each subject on main ?(& other pages). ?Remember textarea size.
+//TODO: ?Individual subject lesson notes
+//      Persistence options:
+//      - cloud storage (dropbox, mega, etc.)
+//      - store data in a extension ?incognito warning (https://www.reddit.com/r/GreaseMonkey/comments/pb760b/comment/ha9ura3, https://violentmonkey.github.io/api/gm/, https://wiki.greasespot.net/GM.setValue)
+//      - GM local storage, might not save data in incognito for some browsers. More info:
+//          https://www.reddit.com/r/GreaseMonkey/comments/pb760b/comment/ha9ura3
+//          https://violentmonkey.github.io/api/gm/
+//          https://wiki.greasespot.net/GM.setValue
