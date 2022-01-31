@@ -35,9 +35,7 @@ export class BrowserStore {
         GM_setValue(this.storeKey, JSON.stringify(map))
     }
 
-    //TODO: Find a better solution for dealing with extension setting store values from multiple tabs. Options:
-    //          - lsbridge (exchange messages between tabs): https://github.com/krasimir/lsbridge
-    //          - localforage (async storage with custom driver support): https://github.com/localForage/localForage
+    // TODO: Differentiate StoreEntry type between optional and always non-null (require defaultValue if set to non-null, account for version changes)
     protected createStoreEntryObject<T extends JSONObject>(key: string, defaultValue?: T): StoreEntry<T> {
         const setStoreEntry = (data: T | undefined) => this.setStoreEntry(key, data)
 

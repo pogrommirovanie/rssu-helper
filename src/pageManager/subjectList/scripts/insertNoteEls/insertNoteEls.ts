@@ -1,20 +1,22 @@
 import { SubjectListPageData } from 'src/pageManager/subjectList'
-import SubjectListStore, { SubjectNoteData } from 'src/pageManager/subjectList/store'
+import SubjectListStore, { SubjectNoteData } from 'src/pageManager/subjectList/subjectListStore'
 import { StoragePageScript } from 'src/classes/pageScript/pageScripts'
 import { SubjectNote } from './subjectNote'
 
 class InsertSubjectNoteElsScript extends StoragePageScript<SubjectListPageData, SubjectListStore> {
     private subjectNotes: SubjectNote[] = []
+    private getNoteForId(notes: Record<string, SubjectNoteData>, id: number | string) {
+        return notes[id + ''] || { collapse: true, content: '' }
+    }
     run(arg: SubjectListPageData, store: SubjectListStore): void {
-        const { subjects } = arg
+        const subjects = arg.getSubjects()
         const noteStoreEntry = store.state.subjectNotes
 
         const getNotes = () => noteStoreEntry.get() || {}
         let notes = getNotes()
         subjects.forEach((subject) => {
             const { id } = subject
-            if (!notes[id]) notes[id] = { collapse: true, content: '' }
-            const note = notes[id]
+            const note = this.getNoteForId(notes, id)
 
             const storeNote = (note: SubjectNoteData) => {
                 notes = getNotes()
@@ -39,7 +41,8 @@ class InsertSubjectNoteElsScript extends StoragePageScript<SubjectListPageData, 
 
         this.subjectNotes.forEach((subjectNote) => {
             const subjectId = subjectNote.getSubjectId()
-            subjectNote.setNoteData(notes[subjectId])
+            const noteData = this.getNoteForId(notes, subjectId)
+            subjectNote.setNoteData(noteData)
         })
     }
 }

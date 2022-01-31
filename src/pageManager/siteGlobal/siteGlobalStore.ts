@@ -1,13 +1,14 @@
 import { BrowserStore } from 'src/classes/store/browserStore'
 
-// type GlobalStoreState = {
-//     /** ms unix timestamp of the last time any store value was set. */
-//     lastUpdate?: number
-// }
+export type GlobalStoreState = {
+    /** ms unix timestamp of the last time any store value was set. */
+    // lastUpdate?: number
+    devMode?: boolean
+}
 
 class SiteGlobalStore extends BrowserStore {
     state = {
-        // globalObj: this.createStoreEntryObject<GlobalStoreState>('globalState', {})
+        globalObj: this.createStoreEntryObject<GlobalStoreState>('globalState', {})
     }
     private constructor() {
         super({ type: 'global', options: {} })

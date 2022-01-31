@@ -1,27 +1,52 @@
 import { createElementWithAttr } from 'src/util/misc'
 
 export class ParsedSubjectEl {
-    id: number
-    url: string
-    newsUrl: string
-    lessonsPlanUrl: string
-    forumUrl: string
-    rootEl: HTMLElement
-    optionsEl: HTMLElement
-    titleEl: HTMLAnchorElement
+    private _id: number
+    public get id(): number {
+        return this._id
+    }
+    private _url: string
+    public get url(): string {
+        return this._url
+    }
+    private _newsUrl: string
+    public get newsUrl(): string {
+        return this._newsUrl
+    }
+    private _lessonsPlanUrl: string
+    public get lessonsPlanUrl(): string {
+        return this._lessonsPlanUrl
+    }
+    private _forumUrl: string
+    public get forumUrl(): string {
+        return this._forumUrl
+    }
+    private _rootEl: HTMLElement
+    public get rootEl(): HTMLElement {
+        return this._rootEl
+    }
+    private _optionsEl: HTMLElement
+    public get optionsEl(): HTMLElement {
+        return this._optionsEl
+    }
+    private _titleEl: HTMLAnchorElement
+    public get titleEl(): HTMLAnchorElement {
+        return this._titleEl
+    }
+
     constructor(rootEl: HTMLElement) {
-        this.rootEl = rootEl
-        this.optionsEl = rootEl.querySelector('td.lesson_options') as HTMLElement
+        this._rootEl = rootEl
+        this._optionsEl = rootEl.querySelector('td.lesson_options') as HTMLElement
 
         // lesson_url format - /subject/index/card/list-switcher/current/subject_id/12345
-        this.titleEl = rootEl.querySelector('div#lesson_title a') as HTMLAnchorElement
-        const id = parseInt(this.titleEl.href.split('/').slice(-1)[0])
+        this._titleEl = rootEl.querySelector('div#lesson_title a') as HTMLAnchorElement
+        const id = parseInt(this._titleEl.href.split('/').slice(-1)[0])
 
-        this.id = id
-        this.url = `/subject/index/card/subject_id/${id}`
-        this.newsUrl = `/news/index/index/subject_id/${id}/subject/subject`
-        this.lessonsPlanUrl = `/lesson/list/my/subject_id/${id}`
-        this.forumUrl = `/forum/subject/subject/${id}`
+        this._id = id
+        this._url = `/subject/index/card/subject_id/${id}`
+        this._newsUrl = `/news/index/index/subject_id/${id}/subject/subject`
+        this._lessonsPlanUrl = `/lesson/list/my/subject_id/${id}`
+        this._forumUrl = `/forum/subject/subject/${id}`
     }
     // TODO: Refactor, create generic createIfNotExists method for html elements
     getAdditionalLinksContainer(): HTMLElement {

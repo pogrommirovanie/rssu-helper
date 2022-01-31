@@ -5,7 +5,9 @@ export class MinimizeButton {
     // selector for grade/total subject score - '.ball-area .message-block'
     private static HIDE_SELECTOR_QUERIES: readonly string[] = ['.lesson_bg #lesson_bg_img', '.lesson_descript_td', '.lesson_options .lesson_teacher']
     private subject: ParsedSubjectEl
-    getSubjectId = (): number => this.subject.id
+    get subjectId() {
+        return this.subject.id
+    }
     private storeMinimized: (min: boolean) => void
     private minSubjectBtn: HTMLElement
     //#region internal state, getters and setters

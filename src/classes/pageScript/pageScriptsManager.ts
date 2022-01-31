@@ -3,41 +3,49 @@ import { BrowserStore } from 'src/classes/store/browserStore'
 import { RunScriptCondition } from './runScriptConditions'
 import { StoragePageScript, SimplePageScript } from './pageScripts'
 
-// TODO: ?Enforce scripts to accept generic argument type that's specified in scriptsManager to ensure type safety
-export abstract class PageScriptsManager<ST extends BrowserStore> {
-    // pagePath: string
+export type GenericPageScript<AT, ST extends BrowserStore> = StoragePageScript<AT, ST> | SimplePageScript<any>
+type PageScriptsManagerOptions<AT, ST extends BrowserStore> = {
     pageStore: ST
-    pageScripts: { [x: string]: StoragePageScript<any, ST> | SimplePageScript<any> } = {}
-    constructor(pageStore: ST, runOnPageLoadConditions: RunScriptCondition[]) {
-        // this.pagePath = window.location.pathname
+    runScriptConditions?: RunScriptCondition[]
+}
+export abstract class PageScriptsManager<AT, ST extends BrowserStore> {
+    private checkedConditions = false
+    protected pageStore: ST
+    protected runScriptConditions: RunScriptCondition[]
+    protected pageScripts: { [x: string]: GenericPageScript<AT, ST> } = {}
+    constructor({ pageStore, runScriptConditions = [] }: PageScriptsManagerOptions<AT, ST>) {
         this.pageStore = pageStore
+        this.runScriptConditions = runScriptConditions
+    }
+    checkRunScriptConditions(): void {
+        if (this.checkedConditions) return
+        this.checkedConditions = true
 
-        window.addEventListener('load', (ev: Event) => {
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
-            const conditions = [...runOnPageLoadConditions, ...scriptConfig.globalRunScriptConditions]
-            const failedCondition = conditions.find((condition) => !condition.shouldLoadScript(ev))
-            if (failedCondition == undefined) this.onPageLoad(ev)
-        })
-        window.addEventListener('focus', (ev) => this.onPageFocus(ev))
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const conditions = [...this.runScriptConditions, ...scriptConfig.globalRunScriptConditions]
+        const failedCondition = conditions.find((condition) => !condition.shouldLoadScript())
+        if (failedCondition == undefined) {
+            this.onPageScriptsEnabled()
+            window.addEventListener('focus', (onFocusEvent) => this.onPageFocus(onFocusEvent))
+        }
     }
     /**
-     * This method is called when the window onload event is fired.
-     * This is where all pageScripts and the scriptsManager itself should initialize (create all needed HTML elements, add eventListeners, etc.)
+     * All pageScripts and the scriptsManager itself should initialize (create/insert all needed HTML elements, add event listeners, etc.)
      */
-    abstract onPageLoad(ev: Event): void
+    protected abstract onPageScriptsEnabled(): void
     /**
      * This method is called when the window onfocus event is fired, which means that the current tab became active,
      * and all running page scripts need to render store changes that could've been made on another tab
      */
-    abstract onPageFocus(ev: FocusEvent): void
-    runPageScripts(arg?: any, scripts = Object.values(this.pageScripts)) {
+    protected abstract onPageFocus(onFocusEvent: FocusEvent): void
+    protected runPageScripts(arg: AT, scripts = Object.values(this.pageScripts)) {
         this.callPageScriptsMethod('run', arg, scripts)
     }
-    updatePageScripts(arg?: any, scripts = Object.values(this.pageScripts)) {
+    protected updatePageScripts(arg?: AT, scripts = Object.values(this.pageScripts)) {
         this.callPageScriptsMethod('update', arg, scripts)
     }
     // TODO: [LOW PRIOR] Refactor, find a simpler way to run/update all scripts
-    private callPageScriptsMethod(methodType: 'run' | 'update', arg?: any, scripts = Object.values(this.pageScripts)) {
+    private callPageScriptsMethod(methodType: 'run' | 'update', arg?: AT, scripts = Object.values(this.pageScripts)) {
         scripts.forEach((script) => {
             if (script instanceof SimplePageScript) {
                 if (methodType == 'run') script.run(arg)

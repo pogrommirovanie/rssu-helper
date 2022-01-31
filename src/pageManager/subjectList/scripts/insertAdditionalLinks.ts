@@ -4,7 +4,7 @@ import { SimplePageScript } from 'src/classes/pageScript/pageScripts'
 
 class InsertAdditionalLinks extends SimplePageScript<SubjectListPageData> {
     run(arg: SubjectListPageData): void {
-        const { subjects } = arg
+        const subjects = arg.getSubjects()
         subjects.forEach((subject) => {
             const { forumUrl, lessonsPlanUrl, newsUrl } = subject
 

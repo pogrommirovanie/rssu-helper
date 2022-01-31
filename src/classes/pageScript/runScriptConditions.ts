@@ -1,16 +1,16 @@
 // TODO: [LOW PRIOR] add more script run conditions (page events, detected text/el on page, etc.)
 
 export abstract class RunScriptCondition {
-    abstract shouldLoadScript(ev: Event): boolean
+    abstract shouldLoadScript(): boolean
 }
 export class RunScriptFunctionCondition extends RunScriptCondition {
-    private fn: (ev: Event) => boolean
-    constructor(fn: (ev: Event) => boolean) {
+    private fn: () => boolean
+    constructor(fn: () => boolean) {
         super()
         this.fn = fn
     }
-    shouldLoadScript(ev: Event) {
-        return this.fn(ev)
+    shouldLoadScript() {
+        return this.fn()
     }
 }
 export class RunScriptURLRegexCondition extends RunScriptCondition {
@@ -21,7 +21,7 @@ export class RunScriptURLRegexCondition extends RunScriptCondition {
         this.failOnMatch = failOnMatch
         this.regex = regex
     }
-    shouldLoadScript(ev: Event): boolean {
+    shouldLoadScript(): boolean {
         const match = this.regex.test(document.location.href)
         return this.failOnMatch ? !match : match
     }

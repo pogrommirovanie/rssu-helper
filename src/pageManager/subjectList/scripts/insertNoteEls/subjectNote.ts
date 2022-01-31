@@ -1,5 +1,5 @@
 import { ParsedSubjectEl } from 'src/pageManager/subjectList/parsers/parsedSubjectEl'
-import { SubjectNoteData } from 'src/pageManager/subjectList/store'
+import { SubjectNoteData } from 'src/pageManager/subjectList/subjectListStore'
 import { createElementWithAttr } from 'src/util/misc'
 
 export class SubjectNote {

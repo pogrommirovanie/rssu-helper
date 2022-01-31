@@ -12,6 +12,6 @@ export const globalConfig = Object.freeze({
 export const scriptConfig = Object.freeze({
     globalRunScriptConditions: Object.freeze([
         new RunScriptURLRegexCondition(/\.(js|css)$/g, true),
-        new RunScriptFunctionCondition((ev) => /eLearning|hypermethod|гипер\s?метод/i.test(document.body.innerHTML))
+        new RunScriptFunctionCondition(() => /eLearning|hypermethod|гипер\s?метод/i.test(document.body.innerHTML))
     ])
 })
