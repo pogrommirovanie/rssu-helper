@@ -25,6 +25,4 @@
 
 ### [GitHub репозиторий проекта](https://github.com/pogrommirovanie/rssu-helper)
 
-<br>
-
-Есть вопросы или предложения? Обращайтесь по адресу pogrommirovanie@outlook.com
+Есть вопросы или предложения? Обращайтесь по адресу <a href="mailto:pogrommirovanie@outlook.com">pogrommirovanie@outlook.com</a>
