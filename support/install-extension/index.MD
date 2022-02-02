@@ -1,17 +1,20 @@
 ## Помощник РГСУ - установка
 
-На данный момент, помощник РГСУ поставляется в виде пользовательского скрипта.\
-В будущем, это может быть заменено расширением для Chrome, Firefox и Opera.
+На данный момент Помощник РГСУ поставляется в виде пользовательского скрипта.\
+В будущем планируется его замена расширением для Chrome, Firefox и Opera, что упростит процесс установки.
 
-1. Установите менеджер пользовательских скриптов:
+### Пошаговая инструкция:
 
-   Первый вариант, [Violentmonkey](https://violentmonkey.github.io/get-it/) (рекомендуется). Ссылки для скачивания:
+1. Установите менеджер пользовательских скриптов. \
+   Ссылки для скачивания:
 
-   - [Firefox](https://addons.mozilla.org/ru/firefox/addon/violentmonkey/)
-   - [Chrome](https://chrome.google.com/webstore/detail/violent-monkey/jinjaccalgkegednnccohejagnlnfdag)
-   - [Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/eeagobfjdenkkddmbclomhiblgggliao)
-   - Opera, Яндекс.Браузер: для установки [расширения из Google Chrome Web Store](https://chrome.google.com/webstore/detail/violent-monkey/jinjaccalgkegednnccohejagnlnfdag), сначала нужно установить расширение [Install Chrome Extensions](https://addons.opera.com/en/extensions/details/install-chrome-extensions/)
+   - Firefox: [Violentmonkey](https://addons.mozilla.org/ru/firefox/addon/violentmonkey/)
+   - Chrome: [Violentmonkey](https://chrome.google.com/webstore/detail/violent-monkey/jinjaccalgkegednnccohejagnlnfdag)
+   - Microsoft Edge: [Violentmonkey](https://microsoftedge.microsoft.com/addons/detail/eeagobfjdenkkddmbclomhiblgggliao)
+   - Opera, Яндекс.Браузер: [Tampermonkey](https://addons.opera.com/ru/extensions/details/tampermonkey-beta/)
+   - Safari: [Tampermonkey](https://apps.apple.com/app/apple-store/id1482490089)
 
-   Второй вариант, [Tampermonkey](https://www.tampermonkey.net/). Подходит, если Violentmonkey не поддерживается вашим браузером.
+2. Установите последнюю версию пользовательского скрипта, перейдя по [этой ссылке](https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js)
 
-2. Установите последнюю версию скрипта, перейдя по [этой ссылке](https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js)
+Если установка прошла успешно, то после перезагрузки страницы "Мои курсы" в СДО появятся дополнительные элементы интерфейса:\
+![Скриншот расширения](/rssu-helper/assets/images/helper-demo-mid.png)
