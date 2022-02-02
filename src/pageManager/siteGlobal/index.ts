@@ -1,20 +1,27 @@
 import { PageScriptsManager } from 'src/classes/pageScript/pageScriptsManager'
 import InsertBadgeScript from './insertBadgeScript'
-import SiteGlobalStore from './siteGlobalStore'
+import SiteGlobalStore from './store/siteGlobalStore'
 
-export default class SiteGlobalScriptManager extends PageScriptsManager<undefined, SiteGlobalStore> {
+export class SiteGlobalScriptData {
+    private store: SiteGlobalStore
+    getStore(): SiteGlobalStore {
+        return this.store
+    }
+    constructor() {
+        this.store = SiteGlobalStore.getInstance()
+    }
+}
+
+export default class SiteGlobalScriptManager extends PageScriptsManager<SiteGlobalScriptData> {
     protected pageScripts = {
         insertBadgeScript: new InsertBadgeScript()
     }
     constructor() {
         super({
-            pageStore: SiteGlobalStore.getInstance()
+            runScriptConditions: []
         })
     }
-    protected onPageScriptsEnabled(): void {
-        this.runPageScripts(undefined)
-    }
-    protected onPageFocus(onFocusEvent: FocusEvent): void {
-        this.updatePageScripts()
+    protected supplyScriptArgument(): SiteGlobalScriptData {
+        return new SiteGlobalScriptData()
     }
 }

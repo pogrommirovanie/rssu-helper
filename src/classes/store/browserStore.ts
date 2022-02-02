@@ -1,8 +1,8 @@
 import { storeConfig } from 'src/config'
 import { StoreScopeData, StoreEntry } from './storeEntry'
 
-// TODO: [LOW PRIOR] ?refactor BrowserStore class as a singleton or just create store classes without it (see siteGlobal/store, subjectList/store)
-export class BrowserStore {
+// TODO: [LOW PRIOR] ?refactor BrowserStore class as a singleton (using https://stackoverflow.com/a/3284757) or just create store classes without it (see siteGlobal store, subjectList store)
+export abstract class BrowserStore {
     private scopeData: Readonly<StoreScopeData>
     private storeKey: Readonly<string>
     state: { [x: string]: StoreEntry<any> } = {}

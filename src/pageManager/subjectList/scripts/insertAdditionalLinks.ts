@@ -1,8 +1,8 @@
 import { createElementWithAttr } from 'src/util/misc'
 import { SubjectListPageData } from 'src/pageManager/subjectList'
-import { SimplePageScript } from 'src/classes/pageScript/pageScripts'
+import { StaticPageScript } from 'src/classes/pageScript/pageScripts'
 
-class InsertAdditionalLinks extends SimplePageScript<SubjectListPageData> {
+class InsertAdditionalLinks extends StaticPageScript<SubjectListPageData> {
     run(arg: SubjectListPageData): void {
         const subjects = arg.getSubjects()
         subjects.forEach((subject) => {

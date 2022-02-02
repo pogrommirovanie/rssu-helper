@@ -1,23 +1,20 @@
 import { scriptConfig } from 'src/config/index'
-import { BrowserStore } from 'src/classes/store/browserStore'
 import { RunScriptCondition } from './runScriptConditions'
-import { StoragePageScript, SimplePageScript } from './pageScripts'
+import { DynamicPageScript, StaticPageScript } from './pageScripts'
 
-export type GenericPageScript<AT, ST extends BrowserStore> = StoragePageScript<AT, ST> | SimplePageScript<any>
-type PageScriptsManagerOptions<AT, ST extends BrowserStore> = {
-    pageStore: ST
+export type GenericPageScript<AT> = DynamicPageScript<AT> | StaticPageScript<AT>
+type PageScriptsManagerOptions<AT> = {
     runScriptConditions?: RunScriptCondition[]
+    // pageScripts?: { [x: string]: GenericPageScript<AT> }
 }
-export abstract class PageScriptsManager<AT, ST extends BrowserStore> {
+export abstract class PageScriptsManager<AT> {
     private checkedConditions = false
-    protected pageStore: ST
     protected runScriptConditions: RunScriptCondition[]
-    protected pageScripts: { [x: string]: GenericPageScript<AT, ST> } = {}
-    constructor({ pageStore, runScriptConditions = [] }: PageScriptsManagerOptions<AT, ST>) {
-        this.pageStore = pageStore
+    protected pageScripts: { [x: string]: GenericPageScript<AT> } = {}
+    constructor({ runScriptConditions = [] }: PageScriptsManagerOptions<AT>) {
         this.runScriptConditions = runScriptConditions
     }
-    checkRunScriptConditions(): void {
+    tryToEnable(): void {
         if (this.checkedConditions) return
         this.checkedConditions = true
 
@@ -30,35 +27,25 @@ export abstract class PageScriptsManager<AT, ST extends BrowserStore> {
         }
     }
     /**
-     * All pageScripts and the scriptsManager itself should initialize (create/insert all needed HTML elements, add event listeners, etc.)
+     * All pageScripts and the scriptsManager itself should initialize (modify DOM, create HTML elements, add event listeners, etc.) when this method is called
      */
-    protected abstract onPageScriptsEnabled(): void
+    protected onPageScriptsEnabled(): void {
+        this.runPageScripts(this.supplyScriptArgument())
+    }
     /**
-     * This method is called when the window onfocus event is fired, which means that the current tab became active,
-     * and all running page scripts need to render store changes that could've been made on another tab
+     * This method is called when the window onfocus event is fired, which means that the current tab became active.
+     * When this happens, all running page scripts need to render possible store changes that were made on another tab
      */
-    protected abstract onPageFocus(onFocusEvent: FocusEvent): void
-    protected runPageScripts(arg: AT, scripts = Object.values(this.pageScripts)) {
-        this.callPageScriptsMethod('run', arg, scripts)
+    protected onPageFocus(onFocusEvent: FocusEvent): void {
+        this.updatePageScripts(this.supplyScriptArgument())
     }
-    protected updatePageScripts(arg?: AT, scripts = Object.values(this.pageScripts)) {
-        this.callPageScriptsMethod('update', arg, scripts)
+    protected abstract supplyScriptArgument(): AT
+    protected runPageScripts(arg: AT = this.supplyScriptArgument(), scripts = Object.values(this.pageScripts)) {
+        scripts.forEach((script) => script.run(arg))
     }
-    // TODO: [LOW PRIOR] Refactor, find a simpler way to run/update all scripts
-    private callPageScriptsMethod(methodType: 'run' | 'update', arg?: AT, scripts = Object.values(this.pageScripts)) {
+    protected updatePageScripts(arg: AT = this.supplyScriptArgument(), scripts = Object.values(this.pageScripts)) {
         scripts.forEach((script) => {
-            if (script instanceof SimplePageScript) {
-                if (methodType == 'run') script.run(arg)
-                else if (methodType == 'update') {
-                    /* simplePageScripts don't need to be updated */
-                } else console.error({ message: `Unable to call '${methodType}' method on script`, script })
-            } else if (script instanceof StoragePageScript) {
-                if (methodType == 'run') script.run(arg, this.pageStore)
-                else if (methodType == 'update') script.renderStoreUpdate(arg, this.pageStore)
-                else console.error({ message: `Unable to call '${methodType}' method on script`, script })
-            } else {
-                console.error({ msg: 'Unsupported page script type', script })
-            }
+            if (script instanceof DynamicPageScript) script.renderDataUpdate(arg)
         })
     }
 }

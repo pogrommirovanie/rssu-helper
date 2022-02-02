@@ -1,10 +1,9 @@
-import { SimplePageScript } from 'src/classes/pageScript/pageScripts'
-import { SubjListWrapperData } from 'src/pageManager/subjectListWrapper'
+import StaticDevOnlyScript, { DevModeWrapper } from 'src/classes/pageScript/generic/devOnlyScripts'
 
-export default class InsertTemplateSubjects extends SimplePageScript<SubjListWrapperData> {
-    run(arg: SubjListWrapperData): void {
+export default class DevOnlyInsertTemplateSubjects extends StaticDevOnlyScript<DevModeWrapper> {
+    runIfDev(): void {
         const lessonHTMLs = [
-            createLessonFromTemplate('Безопасность жизнедеятельности', 66115, 'ФИТ-АБВ-Г-0-Д-2021-А', 5130, 1507, {
+            createLessonFromTemplate('Безопасность жизнедеятельности', 60003, 'ФИТ-АБВ-Г-0-Д-2020-А', 5130, 1507, {
                 theory1: 13,
                 task1: 14,
                 test1: 15,
@@ -12,7 +11,7 @@ export default class InsertTemplateSubjects extends SimplePageScript<SubjListWra
                 exam: 17,
                 lectures: 18
             }),
-            createLessonFromTemplate('Английский язык', 66126, 'ФИТ-АБВ-Г-0-Д-2021-А', 1005, 1505, {
+            createLessonFromTemplate('Английский язык', 60002, 'ФИТ-АБВ-Г-0-Д-2020-А', 1005, 1505, {
                 theory1: 7,
                 task1: 8,
                 test1: 9,
@@ -20,7 +19,7 @@ export default class InsertTemplateSubjects extends SimplePageScript<SubjListWra
                 exam: 11,
                 lectures: 12
             }),
-            createLessonFromTemplate('История', 66342, 'ФИТ-АБВ-Г-0-Д-2021-А', 1000, 1500, {
+            createLessonFromTemplate('История', 60001, 'ФИТ-АБВ-Г-0-Д-2020-А', 1000, 1500, {
                 theory1: 1,
                 task1: 2,
                 test1: 3,
@@ -33,11 +32,9 @@ export default class InsertTemplateSubjects extends SimplePageScript<SubjListWra
             const createdLessonContainer = document.createElement('div')
             createdLessonContainer.innerHTML = lessonHTML.trim()
             const lessonContainer = document.querySelector('.els-content.els-box') as HTMLDivElement
-            console.log(
-                lessonContainer.insertBefore(
-                    createdLessonContainer.firstChild as HTMLDivElement,
-                    lessonContainer.querySelector('.hm-page-support') as HTMLElement
-                )
+            lessonContainer.insertBefore(
+                createdLessonContainer.firstChild as HTMLDivElement,
+                lessonContainer.querySelector('.hm-page-support') as HTMLElement
             )
         })
     }

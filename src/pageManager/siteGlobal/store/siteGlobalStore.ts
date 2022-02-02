@@ -20,7 +20,7 @@ class SiteGlobalStore extends BrowserStore {
             instance = new SiteGlobalStore()
             SiteGlobalStore.instance = instance
         }
-        return instance
+        return new SiteGlobalStore()
     }
 }
 

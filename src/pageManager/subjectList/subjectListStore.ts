@@ -10,14 +10,14 @@ class SubjectListStore extends BrowserStore {
     private constructor() {
         super({ type: 'pageScript', pageScriptName: 'subjectList' })
     }
-    private static instance?: SubjectListStore
+    // private static instance?: SubjectListStore
     static getInstance() {
-        let instance = SubjectListStore.instance
-        if (!instance) {
-            instance = new SubjectListStore()
-            SubjectListStore.instance = instance
-        }
-        return instance
+        // let instance = SubjectListStore.instance
+        // if (!instance) {
+        //     instance = new SubjectListStore()
+        //     SubjectListStore.instance = instance
+        // }
+        return new SubjectListStore()
     }
 }
 

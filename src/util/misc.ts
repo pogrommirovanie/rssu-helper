@@ -3,7 +3,7 @@
 // taken from https://stackoverflow.com/a/23899918 & adapted for typescript
 export function createElementWithAttr<T extends HTMLElement>(
     tagName: string,
-    attribute: Record<string, any> = {},
+    attribute: Record<string, string> = {},
     children: (string | HTMLElement) | (string | HTMLElement)[] = []
 ): T {
     const el = document.createElement(tagName)

@@ -1,15 +1,16 @@
 import { SubjectListPageData } from 'src/pageManager/subjectList'
-import SubjectListStore, { SubjectNoteData } from 'src/pageManager/subjectList/subjectListStore'
-import { StoragePageScript } from 'src/classes/pageScript/pageScripts'
+import { SubjectNoteData } from 'src/pageManager/subjectList/subjectListStore'
+import { DynamicPageScript } from 'src/classes/pageScript/pageScripts'
 import { SubjectNote } from './subjectNote'
 
-class InsertSubjectNoteElsScript extends StoragePageScript<SubjectListPageData, SubjectListStore> {
+class InsertSubjectNoteElsScript extends DynamicPageScript<SubjectListPageData> {
     private subjectNotes: SubjectNote[] = []
     private getNoteForId(notes: Record<string, SubjectNoteData>, id: number | string) {
         return notes[id + ''] || { collapse: true, content: '' }
     }
-    run(arg: SubjectListPageData, store: SubjectListStore): void {
+    run(arg: SubjectListPageData): void {
         const subjects = arg.getSubjects()
+        const store = arg.getStore()
         const noteStoreEntry = store.state.subjectNotes
 
         const getNotes = () => noteStoreEntry.get() || {}
@@ -23,8 +24,8 @@ class InsertSubjectNoteElsScript extends StoragePageScript<SubjectListPageData, 
                 notes[id] = note
 
                 // Log for testing
-                const { collapse, content } = note
-                console.log('Storing note, collapse: ', collapse, '\ncontent:\n' + content)
+                // const { collapse, content } = note
+                // console.log('Storing note, collapse: ', collapse, '\ncontent:\n' + content)
 
                 noteStoreEntry.set(notes)
             }
@@ -32,12 +33,13 @@ class InsertSubjectNoteElsScript extends StoragePageScript<SubjectListPageData, 
             this.subjectNotes.push(subjectNote)
         })
     }
-    renderStoreUpdate(arg: SubjectListPageData, store: SubjectListStore): void {
+    renderDataUpdate(arg: SubjectListPageData): void {
+        const store = arg.getStore()
         const notes = store.state.subjectNotes.get() || {}
 
         // Log for testing
-        const { collapse, content } = Object.values(notes)[0]
-        console.log("Rendering store update. First subject's collapse:", collapse, '\ncontent:\n' + content)
+        // const { collapse, content } = Object.values(notes)[0]
+        // console.log("Rendering store update. First subject's collapse:", collapse, '\ncontent:\n' + content)
 
         this.subjectNotes.forEach((subjectNote) => {
             const subjectId = subjectNote.getSubjectId()

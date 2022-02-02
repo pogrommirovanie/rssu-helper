@@ -33,18 +33,17 @@ export class SubjectNote {
         this.onNoteContentUpdate()
     }
     //#region create additional subject elements
-    // TODO: Don't mix HTML element creation w/ logic/data handling, by creating static elements from a pre-made template in a sep. method
+    // TODO: ?Don't mix HTML element creation w/ logic/data/event handling - ?get required elements from a template that's supplied by a sep. method
     private createTextarea() {
-        const textarea = createElementWithAttr<HTMLTextAreaElement>('textarea', { class: 'subject-note-textarea' })
-        textarea.value = this.content
-        textarea.addEventListener('input', (e) => {
+        this.textarea = createElementWithAttr<HTMLTextAreaElement>('textarea', { class: 'subject-note-textarea' })
+        this.textarea.value = this.content
+        this.textarea.addEventListener('input', (e) => {
             this.content = (e.target as HTMLTextAreaElement).value
             this.storeNoteData()
         })
         SubjectNote.TAREA_RESIZE_EVENTS.forEach((eName) => this.textarea?.addEventListener(eName, (e) => this.resizeTextarea()))
         // FIXME: [LOW PRIOR] resize note textarea workaround, doesn't work without a small delay
         setTimeout(() => this.resizeTextarea(), 100)
-        this.textarea = textarea
     }
     private createNoteButtons() {
         this.removeNoteButton = createElementWithAttr('div', { class: 'note-button remove' }, '')

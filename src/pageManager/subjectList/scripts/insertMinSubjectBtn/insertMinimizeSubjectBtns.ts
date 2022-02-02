@@ -1,12 +1,12 @@
 import { SubjectListPageData } from 'src/pageManager/subjectList'
-import { StoragePageScript } from 'src/classes/pageScript/pageScripts'
-import SubjectListStore from 'src/pageManager/subjectList/subjectListStore'
+import { DynamicPageScript } from 'src/classes/pageScript/pageScripts'
 import { MinimizeButton } from './minimizeButton'
 
-class InsertMinimizeSubjectBtns extends StoragePageScript<SubjectListPageData, SubjectListStore> {
+class InsertMinimizeSubjectBtns extends DynamicPageScript<SubjectListPageData> {
     private minimizeButtonWrappers: MinimizeButton[] = []
-    run(arg: SubjectListPageData, store: SubjectListStore): void {
+    run(arg: SubjectListPageData): void {
         const subjects = arg.getSubjects()
+        const store = arg.getStore()
         const minimzedSubjectsStore = store.state.minimizedSubjects
         const storeMinSubjects = minimzedSubjectsStore.get() || {}
 
@@ -21,7 +21,8 @@ class InsertMinimizeSubjectBtns extends StoragePageScript<SubjectListPageData, S
             this.minimizeButtonWrappers.push(new MinimizeButton(subject, minimized, setMinimzied))
         })
     }
-    renderStoreUpdate(arg: SubjectListPageData, store: SubjectListStore): void {
+    renderDataUpdate(arg: SubjectListPageData): void {
+        const store = arg.getStore()
         const storeMinSubjects = store.state.minimizedSubjects.get() || {}
         this.minimizeButtonWrappers.forEach((minBtnWrapper) => (minBtnWrapper.minimized = storeMinSubjects[minBtnWrapper.subjectId]))
     }

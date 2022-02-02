@@ -1,39 +1,31 @@
+import SubjectListPageManager from 'src/pageManager/subjectList'
+import SiteGlobalStore from 'src/pageManager/siteGlobal/store/siteGlobalStore'
+import { DevModeWrapper } from 'src/classes/pageScript/generic/devOnlyScripts'
 import { PageScriptsManager } from 'src/classes/pageScript/pageScriptsManager'
 import { RunScriptURLRegexCondition } from 'src/classes/pageScript/runScriptConditions'
-import SiteGlobalStore, { GlobalStoreState } from '../siteGlobal/siteGlobalStore'
-import SubjectListPageManager from '../subjectList'
-import InsertTemplateSubjects from './devScripts/insertTemplateSubjects'
-import RunDevOnlyScripts from './runDevOnlyScripts'
+import DevOnlyInsertTemplateSubjects from './devScriptInsertTemplateSubjects'
 
-export type SubjListWrapperData = {
-    getDevMode: () => boolean
-    setDevMode: (devMode: boolean) => void
-}
-
-export default class SubjectListPageManagerWrapper extends PageScriptsManager<SubjListWrapperData, any> {
+export default class SubjectListPageManagerWrapper extends PageScriptsManager<DevModeWrapper> {
     protected pageScripts = {
-        runDevOnlyScripts: new RunDevOnlyScripts({
-            insertTemplateSubjects: new InsertTemplateSubjects()
-        })
+        runDevOnlyScripts: new DevOnlyInsertTemplateSubjects()
     }
     private subjectListPageManager = new SubjectListPageManager()
     constructor() {
         super({
-            pageStore: undefined as any,
-            runScriptConditions: [new RunScriptURLRegexCondition(/\/subject\/list\/list\/list-switcher\/current|\/subject\/list/g)]
+            runScriptConditions: [new RunScriptURLRegexCondition(/\/subject\/list\/list\/list-switcher\/current|\/subject\/list(\?|\/?$)/g)]
         })
     }
-    protected onPageScriptsEnabled(): void {
+    protected supplyScriptArgument(): DevModeWrapper {
         const globalStore = SiteGlobalStore.getInstance()
 
-        const argData: SubjListWrapperData = {
+        const argData: DevModeWrapper = {
             getDevMode: () => !!globalStore.state.globalObj.get()?.devMode,
             setDevMode: (devMode: boolean) => globalStore.state.globalObj.set({ ...(globalStore.state.globalObj.get() || {}), devMode })
         }
-        this.pageScripts.runDevOnlyScripts.run(argData)
-        this.subjectListPageManager.checkRunScriptConditions()
+        return argData
     }
-    protected onPageFocus(onFocusEvent: FocusEvent): void {
-        this.updatePageScripts(undefined)
+    protected override onPageScriptsEnabled(): void {
+        this.runPageScripts()
+        this.subjectListPageManager.tryToEnable()
     }
 }

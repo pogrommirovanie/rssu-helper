@@ -8,14 +8,19 @@ import SubjectListStore from './subjectListStore'
 
 export class SubjectListPageData {
     private subjects: ParsedSubjectEl[]
+    private store: SubjectListStore
     constructor() {
         this.subjects = Array.from(document.querySelectorAll('div.lesson')).map((el) => new ParsedSubjectEl(el as HTMLElement))
+        this.store = SubjectListStore.getInstance()
     }
     getSubjects(): ParsedSubjectEl[] {
         return this.subjects
     }
+    getStore() {
+        return this.store
+    }
 }
-export default class SubjectListPageManager extends PageScriptsManager<SubjectListPageData, SubjectListStore> {
+export default class SubjectListPageManager extends PageScriptsManager<SubjectListPageData> {
     protected pageScripts = {
         insertAdditionalLinks: new InsertAdditionalLinks(),
         insertSubjectNoteEls: new InsertSubjectNoteElsScript(),
@@ -23,17 +28,11 @@ export default class SubjectListPageManager extends PageScriptsManager<SubjectLi
     }
     constructor() {
         super({
-            pageStore: SubjectListStore.getInstance(),
-            runScriptConditions: [new RunScriptURLRegexCondition(/\/subject\/list\/list\/list-switcher\/current|\/subject\/list/g)]
+            runScriptConditions: [new RunScriptURLRegexCondition(/\/subject\/list\/list\/list-switcher\/current|\/subject\/list(\?|\/?$)/g)]
         })
     }
-    protected onPageScriptsEnabled(): void {
-        const pageData = new SubjectListPageData()
-        this.runPageScripts(pageData)
-    }
-    protected onPageFocus(onFocusEvent: FocusEvent): void {
-        const pageData = new SubjectListPageData()
-        this.updatePageScripts(pageData)
+    protected supplyScriptArgument(): SubjectListPageData {
+        return new SubjectListPageData()
     }
 }
 
