@@ -1,6 +1,6 @@
 {
     "displayName": "RSSU Helper",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "RSSU Helper - расширение, дополняющее функционал СДО РГСУ",
     "updateURL": "https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js",
     "compilerOptions": {
