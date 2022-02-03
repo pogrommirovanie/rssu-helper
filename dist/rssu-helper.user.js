@@ -7,7 +7,7 @@
 // @grant GM_deleteValue
 // @updateURL   https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js
 // @downloadURL https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js
-// @version     0.1.0
+// @version     0.1.1
 // @description RSSU Helper - расширение, дополняющее функционал СДО РГСУ
 // ==/UserScript==
 
@@ -129,7 +129,7 @@ eval("\n// TODO: ?Extend this class, (make JSONValue variables & set, get method
   \*****************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.scriptConfig = exports.globalConfig = exports.storeConfig = void 0;\nvar runScriptConditions_1 = __webpack_require__(/*! src/classes/pageScript/runScriptConditions */ \"./src/classes/pageScript/runScriptConditions.ts\");\nexports.storeConfig = Object.freeze({\n    gmDataPrefix: 'script-data-'\n});\nexports.globalConfig = Object.freeze({\n    projectPageURL: 'https://pogrommirovanie.github.io/rssu-helper',\n    badgeDisplayVersion: \"0.1.0\"\n});\nexports.scriptConfig = Object.freeze({\n    globalRunScriptConditions: Object.freeze([\n        new runScriptConditions_1.RunScriptURLRegexCondition(/\\.(js|css)$/g, true),\n        new runScriptConditions_1.RunScriptFunctionCondition(function () { return /eLearning|hypermethod|гипер\\s?метод/i.test(document.body.innerHTML); })\n    ])\n});\n\n\n//# sourceURL=webpack:///./src/config/index.ts?");
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.scriptConfig = exports.globalConfig = exports.storeConfig = void 0;\nvar runScriptConditions_1 = __webpack_require__(/*! src/classes/pageScript/runScriptConditions */ \"./src/classes/pageScript/runScriptConditions.ts\");\nexports.storeConfig = Object.freeze({\n    gmDataPrefix: 'script-data-'\n});\nexports.globalConfig = Object.freeze({\n    projectPageURL: 'https://pogrommirovanie.github.io/rssu-helper',\n    badgeDisplayVersion: \"0.1.1\"\n});\nexports.scriptConfig = Object.freeze({\n    globalRunScriptConditions: Object.freeze([\n        new runScriptConditions_1.RunScriptURLRegexCondition(/\\.(js|css)$/g, true),\n        new runScriptConditions_1.RunScriptFunctionCondition(function () { return /eLearning|hypermethod|гипер\\s?метод/i.test(document.body.innerHTML); })\n    ])\n});\n\n\n//# sourceURL=webpack:///./src/config/index.ts?");
 
 /***/ }),
 
