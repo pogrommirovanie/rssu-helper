@@ -15,7 +15,10 @@
    Safari 6-11 | [Tampermonkey](https://safari.tampermonkey.net/tampermonkey.safariextz)
    Safari 12+ или MacOS 10.13+ | [Tampermonkey](https://apps.apple.com/app/apple-store/id1482490089) (платная версия) или [Userscripts](https://apps.apple.com/app/userscripts/id1463298887) (не протестирован)
 
-2. Установите последнюю версию пользовательского скрипта, перейдя по [этой ссылке](https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js)
+2. Установите последнюю версию пользовательского скрипта, перейдя по [этой ссылке](https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js):
+![Установка скрипта](https://i.imgur.com/RbCY1ns.png)
+
+---
 
 Если установка прошла успешно, то раздел [Мои курсы](https://sdo.rgsu.net/subject/list) в СДО будет дополнен:\
 ![Скриншот расширения](/rssu-helper/assets/images/helper-demo-mid.png)
