@@ -88,9 +88,12 @@ export class SubjectNote {
     //#region utils
     private resizeTextarea() {
         const tarea = this.textarea as HTMLTextAreaElement
+        // fix for scroll jumping on textarea resize: https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize#comment122501893_25621277
+        const startOffset = window.pageYOffset;
         // https://stackoverflow.com/a/48460773
-        tarea.style.height = '1px'
+        tarea.style.height = 'auto'
         tarea.style.height = `${Math.max(30, tarea.scrollHeight) + 5}px`
+        if (startOffset > window.pageYOffset) window.scrollTo({ top: startOffset });
         // if (el.clientHeight != el.scrollHeight) el.style.height = `20px`
     }
 }
