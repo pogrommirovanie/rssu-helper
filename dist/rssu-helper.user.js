@@ -5,6 +5,7 @@
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_deleteValue
+// @run-at      document-end
 // @updateURL   https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js
 // @downloadURL https://github.com/pogrommirovanie/rssu-helper/raw/master/dist/rssu-helper.user.js
 // @version     0.1.1
